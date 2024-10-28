@@ -21,5 +21,6 @@ data class Airport(
     val home_link: URL?,
     val wikipedia_link: URL?,
     val frequencies: List<Frequency>,
-    val runways: List<Runway>
+    val runways: List<Runway>,
+    val navaids: List<NavAid>,
 )
