@@ -20,5 +20,6 @@ data class Airport(
     val local_code: String?,
     val home_link: URL?,
     val wikipedia_link: URL?,
-    val freequencies: List<Frequency>
+    val frequencies: List<Frequency>,
+    val runways: List<Runway>
 )
