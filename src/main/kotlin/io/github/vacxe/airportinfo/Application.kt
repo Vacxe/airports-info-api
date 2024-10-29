@@ -8,10 +8,9 @@ import io.ktor.server.netty.*
 import kotlinx.io.files.Path
 
 fun main(args: Array<String>) {
-    val dataPath = args[0]
-    val host = args[1]
-    val port = args[2].toInt()
-    Data.bootstrap(Path(dataPath))
+    val host = args[0]
+    val port = args[1].toInt()
+    Data.bootstrap()
 
     println("Test: http://$host:$port/getAirportInfo?icao=YBBN")
 

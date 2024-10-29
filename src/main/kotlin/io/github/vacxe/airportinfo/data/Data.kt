@@ -4,10 +4,7 @@ import io.github.vacxe.airportinfo.models.Airport
 import io.github.vacxe.airportinfo.models.Frequency
 import io.github.vacxe.airportinfo.models.NavAid
 import io.github.vacxe.airportinfo.models.Runway
-import kotlinx.io.files.FileNotFoundException
-import kotlinx.io.files.Path
 import org.jetbrains.kotlinx.dataframe.AnyFrame
-import java.io.File
 import kotlin.time.measureTime
 import org.jetbrains.kotlinx.dataframe.DataFrame
 import org.jetbrains.kotlinx.dataframe.io.*
@@ -17,26 +14,25 @@ import java.net.URL
 object Data {
     var airports: Map<String, Airport> = emptyMap()
 
-    fun bootstrap(path: Path) {
+    fun bootstrap() {
         println("Bootstrap...")
         val bootTime = measureTime {
-            val airportFile = loadFile(path, "airports.csv")
-            val airportFrequenciesFile = loadFile(path, "airport-frequencies.csv")
-            val runwaysFile = loadFile(path, "runways.csv")
-            val navaidsFile = loadFile(path, "navaids.csv")
+            val airportsUrl = URL("https://davidmegginson.github.io/ourairports-data/airports.csv")
+            val frequenciesUrl = URL("https://davidmegginson.github.io/ourairports-data/airport-frequencies.csv")
+            val runwaysUrl = URL("https://davidmegginson.github.io/ourairports-data/runways.csv")
+            val navaidsUrl = URL("https://davidmegginson.github.io/ourairports-data/navaids.csv")
 
-            println()
-            val frequencies = loadFrequencies(DataFrame.read(airportFrequenciesFile.absolutePath))
+            val frequencies = loadFrequencies(DataFrame.read(frequenciesUrl))
             println("Frequencies loaded")
 
-            val navaids = loadNavAids(DataFrame.read(navaidsFile.absolutePath))
+            val navaids = loadNavAids(DataFrame.read(navaidsUrl))
             println("NavAids loaded")
 
-            val runways = loadRunways(DataFrame.read(runwaysFile.absolutePath))
+            val runways = loadRunways(DataFrame.read(runwaysUrl))
             println("Runways loaded")
 
             airports = loadAirports(
-                DataFrame.read(airportFile.absolutePath),
+                DataFrame.read(airportsUrl),
                 frequencies,
                 runways,
                 navaids
@@ -45,17 +41,6 @@ object Data {
         }
 
         println("Bootstrap complete $bootTime")
-    }
-
-    private fun loadFile(path: Path, fileName: String): File {
-        val file = File(path.toString(), fileName)
-        if (file.exists()) {
-            println("$fileName ✅")
-            return file
-        } else {
-            println("$fileName ❌")
-            throw FileNotFoundException()
-        }
     }
 
     private fun loadAirports(
