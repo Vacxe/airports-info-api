@@ -18,7 +18,7 @@ jobs:
       - name: Build release tar
         run: ./gradlew distTar
       - name: Tar Checksum
-        run: shasum -a 256 build/distributions/airportsinfo.tar
+        run: shasum -a 256 build/distributions/airports-info-api.tar
       - name: Get release information
         id: get_release
         uses: bruceadams/get-release@v1.3.2
@@ -30,8 +30,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.get_release.outputs.upload_url }}
-          asset_path: ./build/distributions/airportsinfo.tar
-          asset_name: airportsinfo.tar
+          asset_path: ./build/distributions/airports-info-api.tar
+          asset_name: airports-info-api.tar
           asset_content_type: application/x-tar
 
   docker-build-push:
