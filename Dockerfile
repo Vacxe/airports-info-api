@@ -1,10 +1,16 @@
 FROM openjdk:17-jdk-slim
 
-COPY build/distributions/airportsinfo.tar /
+ARG VERSION
 
-RUN tar -xvf "airportsinfo.tar" -C /usr/local
+RUN apk update && \
+    apk add --no-cache jq wget unzip
 
-ENV PATH="${PATH}:/usr/local/airportsinfo/bin/"
+# Install released Version from artefacts
+RUN wget -q "https://github.com/Vacxe/airports-info-api/releases/download/VERSION/airports-info-api.tar" && \
+    tar -xvf "airports-info-api.tar" -C /usr/local &&  \
+    rm "airports-info-api.tar"
+
+ENV PATH="${PATH}:/usr/local/airports-info-api/bin/"
 
 EXPOSE 8080
 

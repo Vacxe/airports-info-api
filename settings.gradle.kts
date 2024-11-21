@@ -1,1 +1,1 @@
-rootProject.name = "airportsinfo"
+rootProject.name = "airports-info-api"
