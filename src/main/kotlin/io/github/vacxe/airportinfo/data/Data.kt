@@ -23,13 +23,13 @@ object Data {
             val navaidsUrl = URL("https://davidmegginson.github.io/ourairports-data/navaids.csv")
 
             val frequencies = loadFrequencies(DataFrame.read(frequenciesUrl))
-            println("Frequencies loaded")
+            println("${frequencies.size} frequencies loaded")
 
             val navaids = loadNavAids(DataFrame.read(navaidsUrl))
-            println("NavAids loaded")
+            println("${navaids.size} navigation aids loaded")
 
             val runways = loadRunways(DataFrame.read(runwaysUrl))
-            println("Runways loaded")
+            println("${runways.size} runways loaded")
 
             airports = loadAirports(
                 DataFrame.read(airportsUrl),
@@ -37,10 +37,11 @@ object Data {
                 runways,
                 navaids
             )
+
             println("${airports.size} airports loaded")
         }
 
-        println("Bootstrap complete $bootTime")
+        println("Bootstrap completed $bootTime")
     }
 
     private fun loadAirports(

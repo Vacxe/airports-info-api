@@ -5,11 +5,10 @@ import io.github.vacxe.airportinfo.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import kotlinx.io.files.Path
 
 fun main(args: Array<String>) {
-    val host = args[0]
-    val port = args[1].toInt()
+    val host = "0.0.0.0"
+    val port = 8080
     Data.bootstrap()
 
     println("Test: http://$host:$port/getAirportInfo?icao=YBBN")

@@ -8,7 +8,6 @@ plugins {
 }
 
 group = "io.github.vacxe.airportinfo"
-version = "0.0.1"
 
 application {
     mainClass.set("io.github.vacxe.airportinfo.ApplicationKt")
