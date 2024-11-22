@@ -58,7 +58,7 @@ jobs:
           USERNAME: ${{ github.actor }}
 
       - name: Docker Build
-        run: docker build -t ghcr.io/vacxe/airports-info-api:$VERSION --build-arg="VERSION=$VERSION" .
+        run: docker build -t ghcr.io/vacxe/airports-info-api:$VERSION --build-arg="RELEASE_VERSION=$VERSION" .
         env:
           VERSION: ${{ steps.get_release.outputs.tag_name }}
 
