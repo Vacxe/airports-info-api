@@ -6,7 +6,7 @@ ARG RELEASE_VERSION
 
 # Install dependencies
 RUN apt-get update
-RUN apt-get install -y npm nodejs wget unzip git
+RUN apt-get install -y wget unzip
 
 # Install Release
 RUN wget -q "https://github.com/Vacxe/airports-info-api/releases/download/$RELEASE_VERSION/airports-info-api.tar" && \
