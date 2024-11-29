@@ -35,8 +35,8 @@ jobs:
           asset_name: airports-info-api.tar
           asset_content_type: application/x-tar
 
-  docker-build-push:
-    name: Build and Push Docker image
+  gh-packages-build-push:
+    name: Build and Push to GitHub Packages
     permissions:
       contents: read
       packages: write
@@ -64,5 +64,34 @@ jobs:
 
       - name: Deploy
         run: docker push ghcr.io/vacxe/airports-info-api:$VERSION
+        env:
+          VERSION: ${{ steps.get_release.outputs.tag_name }}
+
+  docker-registry-build-push:
+    name: Build and Push to Docker Registry
+    runs-on: ubuntu-latest
+    needs: [ release-tar ]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get release information
+        id: get_release
+        uses: bruceadams/get-release@v1.3.2
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Docker Login
+        run: echo $PACKAGES_WRITE_TOKEN | docker login -u $USERNAME --password-stdin
+        env:
+          PACKAGES_WRITE_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+          USERNAME: vacxe
+
+      - name: Docker Build
+        run: docker build -t vacxe/airports-info-api:$VERSION --build-arg="RELEASE_VERSION=$VERSION" .
+        env:
+          VERSION: ${{ steps.get_release.outputs.tag_name }}
+
+      - name: Deploy
+        run: docker push vacxe/airports-info-api:$VERSION
         env:
           VERSION: ${{ steps.get_release.outputs.tag_name }}
