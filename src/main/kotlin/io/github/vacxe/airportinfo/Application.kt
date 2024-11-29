@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
     val port = 8080
     Data.bootstrap()
 
-    println("Test: http://$host:$port/getAirportInfo?icao=YBBN")
+    println("Test: http://$host:$port/getAirportsInfo?icaos=YBBN")
 
     embeddedServer(Netty, port = port, host = host, module = Application::module)
         .start(wait = true)

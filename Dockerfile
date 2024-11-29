@@ -1,14 +1,17 @@
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:23-jdk
 
-ARG RELEASE_VERSION="0.0.1"
+MAINTAINER Konstantin Aksenov
 
+ARG RELEASE_VERSION
+
+# Install dependencies
 RUN apt-get update
-RUN apt-get install -y wget unzip
+RUN apt-get install -y npm nodejs wget unzip git
 
-# Install released Version from artefacts
-RUN wget -q "https://github.com/Vacxe/airports-info-api/releases/download/$RELEASE_VERSION/airports-info-api.tar"
-RUN tar -xvf "airports-info-api.tar" -C /usr/local
-RUN rm "airports-info-api.tar"
+# Install Release
+RUN wget -q "https://github.com/Vacxe/airports-info-api/releases/download/$RELEASE_VERSION/airports-info-api.tar" && \
+    tar -xvf "airports-info-api.tar" -C /usr/local &&  \
+    rm "airports-info-api.tar"
 
 ENV PATH="${PATH}:/usr/local/airports-info-api/bin/"
 

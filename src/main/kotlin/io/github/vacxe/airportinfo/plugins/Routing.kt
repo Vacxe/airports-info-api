@@ -9,11 +9,11 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/getAirportInfo") {
-            val icao = call.queryParameters["icao"]
-            val airport = Data.airports[icao]
-            if(airport != null) {
-                call.respondText(Gson().toJson(airport))
+        get("/getAirportsInfo") {
+            val icaos = call.queryParameters["icaos"]?.split(",")
+            val airports = icaos?.map { Data.airports[it] }
+            if(airports != null) {
+                call.respondText(Gson().toJson(airports))
             } else {
                 call.respond(HttpStatusCode.NotFound)
             }
