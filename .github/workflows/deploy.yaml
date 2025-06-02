@@ -98,4 +98,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: vacxe/airports-info-api:${{ steps.get_release.outputs.tag_name }}
-          build-args: VERSION=${{ steps.get_release.outputs.tag_name }}
+          build-args: RELEASE_VERSION=${{ steps.get_release.outputs.tag_name }}
