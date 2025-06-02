@@ -1,7 +1,5 @@
 FROM eclipse-temurin:23-jdk
 
-MAINTAINER Konstantin Aksenov
-
 ARG RELEASE_VERSION
 
 # Install dependencies
